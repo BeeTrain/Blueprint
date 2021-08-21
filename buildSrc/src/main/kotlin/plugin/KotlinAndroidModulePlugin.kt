@@ -1,16 +1,16 @@
 package plugin
 
+import KotlinDependencies
 import Plugins
+import internal.implementation
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import internal.implementation
-import KotlinDependencies
 
-class KotlinModulePlugin : Plugin<Project> {
+class KotlinAndroidModulePlugin : Plugin<Project> {
 
     override fun apply(project: Project) {
         project.run {
@@ -22,7 +22,8 @@ class KotlinModulePlugin : Plugin<Project> {
 
     private fun Project.applyPlugins() {
         plugins.run {
-            apply(Plugins.kotlin)
+            apply(Plugins.androidKotlin)
+            apply(Plugins.kotlinKapt)
         }
     }
 

@@ -1,4 +1,5 @@
 import internal.implementation
+import internal.kapt
 import org.gradle.api.JavaVersion
 import org.gradle.api.artifacts.dsl.DependencyHandler
 
@@ -9,11 +10,15 @@ object Plugins {
     const val applicationModule = "application-module"
     const val androidModule = "android-module"
     const val kotlinModule = "kotlin-module"
+    const val kotlinAndroidModule = "kotlin-android-module"
 
     const val androidApplication = "com.android.application"
     const val androidLibrary = "com.android.library"
     const val androidKotlin = "kotlin-android"
     const val googleServices = "com.google.gms.google-services"
+
+    const val kotlin = "kotlin"
+    const val kotlinKapt = "kotlin-kapt"
 }
 
 object FirebaseDependencies {
@@ -50,9 +55,19 @@ object AndroidXDependencies {
 
 object KotlinDependencies {
 
-    const val stdLib =  "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
+    const val stdLib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
+}
 
-    fun DependencyHandler.defaultModuleLibs() = apply {
-        implementation(stdLib)
+object DIDependencies {
+    object Versions {
+        const val dagger = "2.38.1"
+    }
+
+    const val dagger = "com.google.dagger:dagger:${Versions.dagger}"
+    const val daggerCompiler = "com.google.dagger:dagger-compiler:${Versions.dagger}"
+
+    fun DependencyHandler.applyDagger() {
+        implementation(dagger)
+        kapt(daggerCompiler)
     }
 }

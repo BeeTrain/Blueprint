@@ -2,7 +2,6 @@ package plugin
 
 import BuildTypes
 import Config
-import KotlinDependencies.defaultModuleLibs
 import Plugins
 import SourceSets
 import internal.libraryExtension
@@ -17,13 +16,12 @@ class AndroidModulePlugin : Plugin<Project> {
         project.run {
             applyPlugins()
             applyLibraryConfig()
-            applyDefaultDependencies()
         }
     }
 
     private fun Project.applyPlugins() {
         apply(plugin = Plugins.androidLibrary)
-        apply(plugin = Plugins.androidKotlin)
+        apply(plugin = Plugins.kotlinAndroidModule)
     }
 
     private fun Project.applyLibraryConfig() {
@@ -53,12 +51,6 @@ class AndroidModulePlugin : Plugin<Project> {
                 sourceCompatibility = javaVersion
                 targetCompatibility = javaVersion
             }
-        }
-    }
-
-    private fun Project.applyDefaultDependencies() {
-        dependencies.apply {
-            defaultModuleLibs()
         }
     }
 }

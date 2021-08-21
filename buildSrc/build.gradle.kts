@@ -38,6 +38,11 @@ gradlePlugin {
             description = "Gradle plugin for kotlin module."
             implementationClass = "plugin.KotlinModulePlugin"
         }
+        register("kotlin-android-module") {
+            id = "kotlin-android-module"
+            description = "Gradle plugin for android kotlin module."
+            implementationClass = "plugin.KotlinAndroidModulePlugin"
+        }
         register("application-module") {
             id = "application-module"
             description = "Gradle plugin for android application module."

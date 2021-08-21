@@ -3,6 +3,7 @@ package plugin
 import AndroidXDependencies
 import BuildTypes
 import Config
+import DIDependencies.applyDagger
 import FirebaseDependencies
 import Plugins
 import SourceSets
@@ -34,7 +35,7 @@ class ApplicationModulePlugin : Plugin<Project> {
     private fun Project.applyPlugins() {
         plugins.apply {
             apply(plugin = Plugins.androidApplication)
-            apply(plugin = Plugins.kotlinModule)
+            apply(plugin = Plugins.kotlinAndroidModule)
             apply(plugin = Plugins.googleServices)
         }
     }
@@ -91,6 +92,7 @@ class ApplicationModulePlugin : Plugin<Project> {
 
             FirebaseDependencies.applyAll(this)
             AndroidXDependencies.applyAll(this)
+            applyDagger()
         }
     }
 }
