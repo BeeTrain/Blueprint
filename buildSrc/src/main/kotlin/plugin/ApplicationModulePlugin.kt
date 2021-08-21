@@ -7,13 +7,19 @@ import FirebaseDependencies
 import Plugins
 import SourceSets
 import internal.applicationExtension
+import internal.coreModulesDirectory
+import internal.featureModulesDirectory
 import internal.getGitVersionCode
 import internal.getGitVersionName
+import internal.implementation
+import internal.isGradleProjectDir
 import javaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.dependencies
+import org.gradle.kotlin.dsl.project
+import java.io.File
 
 class ApplicationModulePlugin : Plugin<Project> {
 
@@ -69,6 +75,20 @@ class ApplicationModulePlugin : Plugin<Project> {
 
     private fun Project.applyDependencies() {
         dependencies {
+            // Base modules
+            File(coreModulesDirectory).listFiles()?.forEach { baseModule ->
+                if (baseModule.isDirectory && baseModule.isGradleProjectDir) {
+                    implementation(project(":${baseModule.name}"))
+                }
+            }
+
+            // Feature modules
+            File(featureModulesDirectory).listFiles()?.forEach { featureModule ->
+                if (featureModule.isDirectory && featureModule.isGradleProjectDir) {
+                    implementation(project(":${featureModule.name}"))
+                }
+            }
+
             FirebaseDependencies.applyAll(this)
             AndroidXDependencies.applyAll(this)
         }
